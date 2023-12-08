@@ -1,0 +1,21 @@
+version: "3.1"
+
+networks:
+  api-network:
+    driver: bridge
+
+
+services:
+  db:
+    container_name: go-test
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_DB=go-db
+      - POSTGRES_PASSWORD=boms
+      - POSTGRES_USER=boms
+    networks:
+      - api-network
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/roles.sql:/docker-entrypoint-initdb.d/roles.sql
