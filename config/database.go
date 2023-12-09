@@ -1,6 +1,7 @@
 package config
 
 import (
+	"example/first-api/helper"
 	"example/first-api/schemas"
 	"fmt"
 
@@ -24,15 +25,11 @@ func databaseConnectionInitializer() (*gorm.DB, error) {
 	fmt.Println("Iniciando conexão com banco")
 	db, err := gorm.Open(postgres.Open(DataSourceName), &gorm.Config{})
 
-	if err != nil {
-		fmt.Println("Erro ao conectar em banco")
-	}
+	helper.Error(err)
 
 	err = db.AutoMigrate(&schemas.Person{})
-	if err != nil {
-		fmt.Println("Erro ao criar tabela")
-		return nil, err
-	}
+
+	helper.Error(err)
 
 	return db, err
 }

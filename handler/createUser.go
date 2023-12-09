@@ -19,6 +19,15 @@ func InitializeUserRequest(db *gorm.DB) UserHandlerInterface {
 	}
 }
 
+// CreateUser Creates a new user
+// @Summary Create a new user
+// @Description Create a new user with the provided user information
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param userRequest body schemas.PersonRequest true "User information for registration"
+// @Success 200 {object} schemas.PersonResponse
+// @Router /api/v1/person [post]
 func (t *UserRequest) CreateUser(c *gin.Context) {
 	var newUser schemas.PersonRequest
 

@@ -1,0 +1,64 @@
+basePath: /
+definitions:
+  schemas.PersonRequest:
+    properties:
+      cpf:
+        type: string
+      location:
+        type: string
+      name:
+        type: string
+      salary:
+        type: integer
+    type: object
+  schemas.PersonResponse:
+    properties:
+      cpf:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: integer
+      location:
+        type: string
+      name:
+        type: string
+      salary:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API for crud operations on users
+  title: Meu Primeiro CRUD em Go | HunCoding
+  version: "1.0"
+paths:
+  /api/v1/person:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user with the provided user information
+      parameters:
+      - description: User information for registration
+        in: body
+        name: userRequest
+        required: true
+        schema:
+          $ref: '#/definitions/schemas.PersonRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schemas.PersonResponse'
+      summary: Create a new user
+      tags:
+      - Users
+schemes:
+- http
+swagger: "2.0"
