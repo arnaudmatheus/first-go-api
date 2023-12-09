@@ -2,10 +2,12 @@ package main
 
 import (
 	"example/first-api/config"
+	"example/first-api/handler"
 	"example/first-api/router"
 )
 
 func main() {
-	config.Init()
-	router.InitializeRouter()
+	database := config.Init()
+	userRequest := handler.InitializeUserRequest(database)
+	router.InitializeRouter(userRequest)
 }

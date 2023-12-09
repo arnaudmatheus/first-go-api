@@ -6,8 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func setupRoutes(router *gin.Engine) {
-	handler.InitializeHandler()
+func setupRoutes(router *gin.Engine, handler handler.UserHandlerInterface) {
 	basePath := "/api/v1"
 
 	v1 := router.Group(basePath)

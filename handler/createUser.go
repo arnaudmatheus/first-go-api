@@ -6,9 +6,20 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-func CreateUser(c *gin.Context) {
+type UserRequest struct {
+	Db *gorm.DB
+}
+
+func InitializeUserRequest(db *gorm.DB) UserHandlerInterface {
+	return &UserRequest{
+		Db: db,
+	}
+}
+
+func (t *UserRequest) CreateUser(c *gin.Context) {
 	var newUser schemas.PersonRequest
 
 	if err := c.BindJSON(&newUser); err != nil {
@@ -23,7 +34,7 @@ func CreateUser(c *gin.Context) {
 		Salary:   newUser.Salary,
 	}
 
-	if err := database.Create(&newUserEntity).Error; err != nil {
+	if err := t.Db.Create(&newUserEntity).Error; err != nil {
 		fmt.Println("Erro ao criar usuário")
 
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "database erro"})

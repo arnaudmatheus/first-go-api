@@ -8,17 +8,14 @@ import (
 	"gorm.io/gorm"
 )
 
-const PostgresDriver = "postgres"
-
-const User = "boms"
-
-const Host = "localhost"
-
-const Port = "5432"
-
-const Password = "boms"
-
-const DbName = "go-db"
+const (
+	PostgresDriver = "postgres"
+	User           = "boms"
+	Host           = "localhost"
+	Port           = "5432"
+	Password       = "boms"
+	DbName         = "go-db"
+)
 
 var DataSourceName = fmt.Sprintf("host=%s port=%s user=%s "+
 	"password=%s dbname=%s sslmode=disable", Host, Port, User, Password, DbName)
