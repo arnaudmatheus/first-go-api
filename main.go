@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "example/first-api/docs"
+	"example/first-api/repository"
 
 	"example/first-api/config"
 	"example/first-api/handler"
@@ -17,6 +18,7 @@ import (
 // @license MIT
 func main() {
 	database := config.Init()
-	userRequest := handler.InitializeUserRequest(database)
+	userRepository := repository.InitializeUserRepository(database)
+	userRequest := handler.InitializeUserRequest(userRepository)
 	router.InitializeRouter(userRequest)
 }

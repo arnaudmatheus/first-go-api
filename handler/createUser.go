@@ -1,21 +1,21 @@
 package handler
 
 import (
+	"example/first-api/repository"
 	"example/first-api/schemas"
 	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 type UserRequest struct {
-	Db *gorm.DB
+	userRepository repository.UserRepositoryInterface
 }
 
-func InitializeUserRequest(db *gorm.DB) UserHandlerInterface {
+func InitializeUserRequest(userRepository repository.UserRepositoryInterface) UserHandlerInterface {
 	return &UserRequest{
-		Db: db,
+		userRepository: userRepository,
 	}
 }
 
@@ -43,10 +43,9 @@ func (t *UserRequest) CreateUser(c *gin.Context) {
 		Salary:   newUser.Salary,
 	}
 
-	if err := t.Db.Create(&newUserEntity).Error; err != nil {
-		fmt.Println("Erro ao criar usuário")
-
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "database erro"})
+	if err := t.userRepository.CreateUser(newUserEntity); err != nil {
+		fmt.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
